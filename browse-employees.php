@@ -71,7 +71,9 @@
 
                           <div class="mdl-tabs__panel is-active" id="address-panel">
 
-                            <?php   
+                            <?php 
+                            if(isset($_GET["id"])) {
+                            
                              $sql = "select * from Employees where EmployeeID LIKE '".$id."';";
                              
                               foreach($pdo->query($sql) as $row){
@@ -81,7 +83,12 @@
                                 echo "<br/>".$row["Country"].", ".$row["Postal"];
                                 echo "<br/>".$row["Email"]."</p>";
                                 
-                             }
+                             } 
+                              
+                            }
+                            else {
+                              echo "<p>No user selected</p>";
+                            }
                             ?>
 
 

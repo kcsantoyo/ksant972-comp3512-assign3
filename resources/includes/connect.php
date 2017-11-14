@@ -1,6 +1,6 @@
 <?php
     $hostname = "127.0.0.1";
-    $username = "gchase";
+    $username = "kidautobot";
     $password = "";
     $dbname = "book";
     $id = $_GET["id"];
