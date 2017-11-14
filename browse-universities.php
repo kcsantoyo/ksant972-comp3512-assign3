@@ -52,7 +52,13 @@
                 <form action="browse-universities.php" method="get" id="state">
                     
                     <input class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit" name=""/>
-           </form>      
+               
+               <div>
+                   <a href="browse-universities.php" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Remove Filter</a>
+               </div>
+               
+               </form>
+               
                 <div class="mdl-card__supporting-text">
                     <ul class="demo-list-item mdl-list">
 

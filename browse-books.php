@@ -39,9 +39,13 @@
                 <h2 class="mdl-card__title-text">Filters</h2>
             </div>
              <div class="mdl-card__supporting-text">
+                 <div>
+                   <a href="browse-books.php" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Remove Filter</a>
+                 </div>
                 <?php
                 echo "<p class='mdl-card__title-text'>Subcategories:<p>";
                 $sql = "Select * from Subcategories;";
+
                 echo "<ul class='demo-list-item mdl-list'>";
                 foreach($pdo->query($sql) as $row){
                     echo"<li><a href='browse-books.php?subcategory=".$row["SubcategoryID"]."'>".$row["SubcategoryName"]."</a></li>";
