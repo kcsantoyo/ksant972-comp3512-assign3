@@ -16,8 +16,16 @@
     </HEAD>
     
       <?php 
-      include 'resources/includes/connect.php'; 
-      $id = $_GET["id"];
+      include 'resources/includes/connect.php';
+      include 'resources/lib/EmployeesGateway.class.php';
+      include 'resources/lib/EmployeeToDoDB.class.php';
+      include 'resources/lib/EmployeeMessagesDB.class.php';
+      include 'resources/lib/ContactDB.class.php';
+      //$id = $_GET["id"];
+      $employees = new EmployeesGateway($connection);
+      $employeesToDo = new EmployeeToDoDB($connection);
+      $employeeMessages = new EmployeeMessagesDB($connection);
+      $contact = new ContactDB($connection);
       ?>
 
 <body>
@@ -41,9 +49,10 @@
                     <ul class="demo-list-item mdl-list">
 
                   <?php
-                        $sql = "Select EmployeeID, FirstName, LastName from Employees ORDER BY LastName ASC;";
                         
-                         foreach($pdo ->query($sql) as $row){
+                        //$sql = "Select EmployeeID, FirstName, LastName from Employees ORDER BY LastName ASC;";
+                        
+                         foreach($employees->findAll() as $row){
                             echo "<li>
                                   <a href='browse-employees.php?id=".$row['EmployeeID']."'>".
                                   $row['FirstName']." ".$row['LastName'].
@@ -71,24 +80,18 @@
 
                           <div class="mdl-tabs__panel is-active" id="address-panel">
 
-                            <?php 
-                            if(isset($_GET["id"])) {
-                            
-                             $sql = "select * from Employees where EmployeeID LIKE '".$id."';";
+                            <?php   
+                             //$sql = "select * from Employees where EmployeeID LIKE '".$id."';";
                              
-                              foreach($pdo->query($sql) as $row){
+                             if(isset($_GET['id'])){
+                             $row = $employees->findById($_GET['id']);
                                 echo "<h3>".$row["FirstName"]." ".$row["LastName"]."</h3>";
                                 echo "<p>".$row["Address"];
                                 echo "<br/>".$row["City"].", ".$row["Region"];
                                 echo "<br/>".$row["Country"].", ".$row["Postal"];
                                 echo "<br/>".$row["Email"]."</p>";
-                                
                              } 
                               
-                            }
-                            else {
-                              echo "<p>No user selected</p>";
-                            }
                             ?>
 
 
@@ -107,9 +110,14 @@
                                   </thead>
                                   <tbody>
                                   <?php
-                                        $sql = "select * from EmployeeToDo where EmployeeID LIKE'".$id."' ORDER BY DateBy DESC;";
+                                        //$sql = "select * from EmployeeToDo where EmployeeID LIKE'".$id."' ORDER BY DateBy DESC;";
                                         
-                                        foreach($pdo ->query($sql) as $row){
+                                        
+                                        $result = $employeesToDo->getAll();
+                    
+                                        if(isset($_GET['id'])){
+                                        foreach($result as $row){
+                                          if($row['EmployeeID'] == $_GET['id']){
                                         $date = date_create($row["DateBy"]);
                                         $date = date_format($date, "Y-M-d");
                                         echo "<tr>";
@@ -118,6 +126,8 @@
                                             echo "<td class='mdl-data-table__cell--non-numeric'>".$row["Priority"]."</td>";
                                             echo "<td class='mdl-data-table__cell--non-numeric'>".$row["Description"]."</td>";
                                         echo "</tr>";
+                                          }
+                                        }
                                         }
                                   ?>
                                   </tbody>
@@ -141,22 +151,25 @@
                                   <tbody>
 
                                   <?php
-                                        $sql = "select * from EmployeeMessages where EmployeeID LIKE'".$id."' ORDER BY MessageDate DESC;";
+                                        //$sql = "select * from EmployeeMessages where EmployeeID LIKE'".$id."' ORDER BY MessageDate DESC;";
+                                        if(isset($_GET['id'])){
+                                        $result = $employeeMessages->getAll();
                                         
-                                        foreach($pdo->query($sql) as $row){
-                                        $date = date_create($row["MessageDate"]);
-                                        $date = date_format($date, "Y-M-d");
-                                        echo "<tr>";
+                                        foreach($result as $row){
+                                          if($row['EmployeeID'] == $_GET['id']){
+                                            $date = date_create($row["MessageDate"]);
+                                            $date = date_format($date, "Y-M-d");
+                                            echo "<tr>";
                                             echo "<td class='mdl-data-table__cell--non-numeric'>".$date."</td>";
                                             echo "<td class='mdl-data-table__cell--non-numeric'>".$row["Category"]."</td>";
-                                            
-                                            foreach($pdo->query("select * from Contacts Where ContactID LIKE '".$row['ContactID']."';") as $contact){
-                                             echo "<td class='mdl-data-table__cell--non-numeric'>".$contact["FirstName"]." ".$contact["LastName"]."</td>";
+
+                                            $contactRow = $contact->findById($row['ContactID']);
+                                             echo "<td class='mdl-data-table__cell--non-numeric'>".$contactRow["FirstName"]." ".$contactRow["LastName"]."</td>";
                                               
-                                            }
-                                            
                                             echo "<td class='mdl-data-table__cell--non-numeric'>".$row["Content"]."</td>";
                                         echo "</tr>";
+                                          }
+                                        }
                                         }
                                   ?>
 

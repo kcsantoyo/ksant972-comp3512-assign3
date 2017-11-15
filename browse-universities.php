@@ -18,8 +18,11 @@
     </HEAD>
 
       <?php 
-      include 'resources/includes/connect.php'; 
-      $id = $_GET["id"];
+      include 'resources/includes/connect.php';
+      include 'resources/lib/UniversitiesGateway.class.php';
+      include 'resources/lib/StateDB.class.php';
+      include ''
+      //$id = $_GET["id"];
       ?>
 
 <body>
