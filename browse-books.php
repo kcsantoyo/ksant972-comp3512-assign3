@@ -41,7 +41,7 @@
     
     <div class="mdl-grid">
         
-        <div class="mdl-cell mdl-cell--7-col card-lesson mdl-card  mdl-shadow--2dp">
+        <div class="mdl-cell mdl-cell--8-col card-lesson mdl-card  mdl-shadow--2dp">
             <div class="mdl-card__title  mdl-color--orange">
                 <h2 class="mdl-card__title-text">Books</h2>
             </div>
@@ -114,7 +114,7 @@
             
         </div> <!-- mdl card (books) -->
         
-         <div class="mdl-cell mdl-cell--1-col card-lesson mdl-card  mdl-shadow--2dp">
+         <div class="mdl-cell mdl-cell--2-col card-lesson mdl-card  mdl-shadow--2dp">
             <div class="mdl-card__title  mdl-color--orange">
                 <h2 class="mdl-card__title-text">Subcategories</h2>
             </div>
@@ -137,21 +137,19 @@
         </div> <!-- mdl card (Subcategories) -->
                 
                 
-                <div class="mdl-cell mdl-cell--1-col card-lesson mdl-card  mdl-shadow--2dp">
+                <div class="mdl-cell mdl-cell--2-col card-lesson mdl-card  mdl-shadow--2dp">
                     <div class="mdl-card__title  mdl-color--orange">
                         <h2 class="mdl-card__title-text">Imprints</h2>
                     </div>
-                 <div class="mdl-card__supporting-text">
-                     <div>
-                       <a href="browse-books.php" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Remove Filter</a>
+                     <div class="mdl-card__supporting-text">
+                         <div>
+                           <a href="browse-books.php" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Remove Filter</a>
                      </div>
-                 </div>
-                
                 <?php
                 
                 //$sql = "Select * from Imprints;";
                 
-                echo "<p class='mdl-card__title-text'>Imprints:</p>";
+                 echo "<p class='mdl-card__title-text'>Imprints:<p>";
                 echo "<ul class='demo-list-item mdl-list'>";
                 foreach($imprints->getAll() as $row){
                     echo"<li><a href='browse-books.php?imprint=".$row["ImprintID"]."'>".$row["Imprint"]."</a></li>";

@@ -15,7 +15,11 @@
         <script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
     </HEAD>
 
-<?php include 'resources/includes/connect.php'; 
+<?php 
+include 'resources/includes/connect.php';
+include 'resources/lib/BooksGateway.class.php';
+
+$books = new BooksGateway($connection);
 
                     function generatetableRow($title, $data)
                     {
@@ -47,14 +51,17 @@
                         <ul class='demo-list-item mdl-list'>
                             
                         <?php
-                            $sql = "select * from
+                            /*$sql = "select * from
                                     Authors as a
                                     JOIN BookAuthors as ba on a.AuthorID=ba.AuthorID
                                     JOIN Books as b ON ba.BookID=b.BookID
-                                    WHERE b.ISBN10 LIKE '".$_GET['ISBN10']."';";
+                                    WHERE b.ISBN10 LIKE '".$_GET['ISBN10']."';"; */
                                     
-                            foreach ($pdo->query($sql) as $row) {
-                                echo "<li>  ".$row['FirstName']." ".$row['LastName']."</li>";
+                                $result = $books->findAuthorsByISBN();
+                                foreach($result as $row) {
+                                    if($row['ISBN10'] == $_GET['ISBN10']) {
+                                        echo "<li>  ".$row['FirstName']." ".$row['LastName']."</li>";
+                                }
                             }
                         ?>    
                             
@@ -71,27 +78,30 @@
                         <ul class='demo-list-item mdl-list'>
                             
                             <?php
-                            $sql = "select * from
+                            /*$sql = "select * from
                                     Universities as u
                                     JOIN Adoptions as a ON u.UniversityID=a.UniversityID
                                     JOIN AdoptionBooks as d ON a.AdoptionID=d.AdoptionID
                                     JOIN Books as b ON d.BookID=b.BookID
-                                    WHERE b.ISBN10 LIKE '".$_GET['ISBN10']."';";
+                                    WHERE b.ISBN10 LIKE '".$_GET['ISBN10']."';";*/
                                     
-                            foreach ($pdo->query($sql) as $row) {
-                                echo "<li>  ".$row['Name']."</li>";
-                            }
+                                $result = $books->findUniversitiesByISBN();
+                                foreach ($result as $row) {
+                                    if($row['ISBN10'] == $_GET['ISBN10']) {
+                                        echo "<li>  ".$row['Name']."</li>";
+                                    }
+                                }
                         ?>    
                             
                         </ul>
                 </div>
                 
                 
-               <div class="mdl-cell mdl-cell--4-col card-lesson mdl-card  mdl-shadow--2dp">
+               <div class="mdl-cell mdl-cell--6-col card-lesson mdl-card  mdl-shadow--2dp">
                     <div class="mdl-card__title  mdl-color--orange">
                     
                     <?php
-                    $sql = "select * 
+                    /*$sql = "select * 
                                 from Books as b 
                                 JOIN Subcategories as s ON b.SubcategoryID=s.SubcategoryID 
                                 JOIN Imprints as i ON b.ImprintID=i.ImprintID
@@ -99,10 +109,13 @@
                                 JOIN BindingTypes as t ON b.BindingTypeID=t.BindingTypeID
                                 JOIN BookAuthors as n ON b.BookID=n.BookID
                                 JOIN Authors as a ON n.AuthorID=a.AuthorID
-                                WHERE b.ISBN10 LIKE '".$_GET['ISBN10']."';";
+                                WHERE b.ISBN10 LIKE '".$_GET['ISBN10']."';";*/
                                 
+                                $result = $books->grabAllSingleInfo();
                                 
-                                foreach($pdo->query($sql) as $row);
+                                foreach($result as $row) {
+                                    if($row['ISBN10'] == $_GET['ISBN10']){
+                                        
                                 echo "<h2 class='mdl-card__title-text'>".$row["Title"]."</h2></div>";
                                 echo "<div class='.mdl-card__actions'>
                                 
@@ -121,6 +134,8 @@
                                 echo generatetableRow("Description", $row["Description"]);
                                 echo "</table>
                                 </div>";
+                                    }
+                                }
                     ?>
                     
                     </div>

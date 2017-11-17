@@ -6,6 +6,10 @@ header h1.mdl-layout-title {
     color: #ff6e40;
 }
 
+ul li{
+  list-style-type: none;
+}
+
 .profile {
    background-color: #263238;
     display: flex;

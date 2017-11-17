@@ -63,6 +63,24 @@
                 </div>
             </div>
             
+            <div class="mdl-card mdl-cell mdl-cell--6-col mdl-shadow--2dp" height="100px">
+                <div class="mdl-card__media">
+                    <img src="" object-fit=cover></img>
+                </div>
+                <div class="mdl-card__actions mdl-card--border">
+                    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="analytics.php">Analytics</a>
+                </div>
+            </div>
+            
+            <div class="mdl-card mdl-cell mdl-cell--6-col mdl-shadow--2dp" height="100px">
+                <div class="mdl-card__media">
+                    <img src="" object-fit=cover></img>
+                </div>
+                <div class="mdl-card__actions mdl-card--border">
+                    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="">User Profile</a>
+                </div>
+            </div>
+            
             
         </div> 
   </section>

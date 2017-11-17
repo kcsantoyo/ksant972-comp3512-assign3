@@ -88,7 +88,7 @@ abstract class TableDataGateway
   }
   
   /*
-      Returns all records that are are universities in that state
+      Returns all records that are universities in that state
   */
   public function findUniversityByState($state) {
      $sql = $this->getSelectStatement() . ' WHERE ' . $this->getStateName() . '=:state';
@@ -97,6 +97,32 @@ abstract class TableDataGateway
      return $statement->fetchAll();
   }
   
+  /*
+      Returns all records that are Authors for that ISBN10
+  */
+  public function findAuthorsByISBN() {
+     $sql = $this->getSelectStatementSingleAuthor();
+     
+     $statement = DatabaseHelper::runQuery($this->connection, $sql, null);
+     return $statement->fetchAll();
+  }
+  
+  /*
+      Returns all records that are Universities for the ISBN10
+  */
+  public function findUniversitiesByISBN() {
+     $sql = $this->getSelectStatementSingleUniversities();
+     
+     $statement = DatabaseHelper::runQuery($this->connection, $sql, null);
+     return $statement->fetchAll();
+  }
+  
+  public function grabAllSingleInfo() {
+     $sql = $this->getSelectStatementSingleAllInfo();
+     
+     $statement = DatabaseHelper::runQuery($this->connection, $sql, null);
+     return $statement->fetchAll();
+  }
 
 }
 
