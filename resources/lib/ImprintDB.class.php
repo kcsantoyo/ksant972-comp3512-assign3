@@ -22,6 +22,13 @@ class ImprintDB {
         return $statement->fetchAll();
     }
     
+    //return all the records with associated ImprintID
+    public function getAllById($id) {
+        $sql = self::$baseSQL . ' WHERE ImprintID=:id ';
+        $statement = DatabaseHelper::runQuery($this->connect, $sql, Array(':id' => $id));
+        return $statement->fetchAll();
+    }
+    
     //return just a single record whose key value = passed parameter
     public function findById($id) {
         $sql = self::$baseSQL . ' WHERE ImprintID=:id ';

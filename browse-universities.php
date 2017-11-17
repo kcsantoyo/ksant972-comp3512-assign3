@@ -21,8 +21,10 @@
       include 'resources/includes/connect.php';
       include 'resources/lib/UniversitiesGateway.class.php';
       include 'resources/lib/StateDB.class.php';
-      include ''
       //$id = $_GET["id"];
+      
+      $states = new StateDB($connection);
+      $universities = new UniversitiesGateway($connection);
       ?>
 
 <body>
@@ -45,9 +47,9 @@
                 
                     <select form="state" name='state'> 
                         <?php
-                         $sql = "select * from States;";
+                         //$sql = "select * from States;";
                         
-                         foreach($pdo-> query($sql) as $row){
+                         foreach($states->getAll() as $row){
                                echo "<option value='".$row['StateId']."'>".$row['StateName']."</option>";
                             }
                     ?>
@@ -67,13 +69,16 @@
 
                   <?php
                         if (isset($_GET['state'])){
-                            $sql = "Select * from Universities where State = (Select StateName from States Where StateId Like ".$_GET['state'].") ORDER by Name LIMIT 20;";
+                            //$sql = "Select * from Universities where State = (Select StateName from States Where StateId Like ".$_GET['state'].") ORDER by Name LIMIT 20;";
+                            $resultState = $states->findById($_GET['state']);
+                            $result = $universities->findUniversityByState($resultState['StateName']);
                         }
                         else {
-                            $sql = "Select * from Universities ORDER BY Name limit 20;";
+                            //$sql = "Select * from Universities ORDER BY Name limit 20;";
+                            $result = $universities->findAll('Name Limit 20');
                         }
                         
-                        foreach($pdo->query($sql) as $row) {
+                        foreach($result as $row) {
                             echo "<li>
                                   <a href='browse-universities.php?id=".$row['UniversityID']."'>"
                                   .$row['Name']
@@ -100,17 +105,17 @@
                           <div class="mdl-tabs__panel is-active" id="address-panel">
 
                             <?php   
-                             $sql = "select * from Universities where UniversityID LIKE '".$id."';";
+                             //$sql = "select * from Universities where UniversityID LIKE '".$id."';";
                              
-                              foreach($pdo->query($sql) as $row){
+                             if(isset($_GET['id'])) {
+                              $row = $universities->findById($_GET['id']);
                                 echo "<h3>".$row["Name"]."</h3>";
                                 echo "<p>".$row["Address"];
                                 echo "<br/>".$row["City"].", ".$row["State"];
                                 echo "<br/>".$row["Zip"];
                                 echo "<br/><a href='".$row["Website"]."'>".$row["Website"]."</a>";
                                 echo "<br/>Longitude: ".$row["Longitude"].", Latitude: ".$row["Latitude"];
-                                
-                             }
+                              }
                             ?>
 
 

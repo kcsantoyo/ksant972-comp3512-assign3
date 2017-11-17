@@ -86,7 +86,17 @@ abstract class TableDataGateway
      $statement = DatabaseHelper::runQuery($this->connection, $sql, Array(':id' => $id));
      return $statement->fetch();
   }
- 
+  
+  /*
+      Returns all records that are are universities in that state
+  */
+  public function findUniversityByState($state) {
+     $sql = $this->getSelectStatement() . ' WHERE ' . $this->getStateName() . '=:state';
+     
+     $statement = DatabaseHelper::runQuery($this->connection, $sql, Array(':state' => $state));
+     return $statement->fetchAll();
+  }
+  
 
 }
 

@@ -16,9 +16,16 @@
     </HEAD>
 
 <?php 
-    include 'resources/includes/connect.php'; 
-    $subcategoryId = $_GET['subcategory'];
-    $imprintId = $_GET['imprint'];
+    include 'resources/includes/connect.php';
+    include 'resources/lib/SubcategoryDB.class.php';
+    include 'resources/lib/ImprintDB.class.php';
+    include 'resources/lib/BooksGateway.class.php';
+    //$subcategoryId = $_GET['subcategory'];
+    //$imprintId = $_GET['imprint'];
+    
+    $subcategories = new SubcategoryDB($connection);
+    $imprints = new ImprintDB($connection);
+    $books = new BooksGateway($connection);
 ?>
 
 <body>
@@ -34,39 +41,7 @@
     
     <div class="mdl-grid">
         
-         <div class="mdl-cell mdl-cell--1-col card-lesson mdl-card  mdl-shadow--2dp">
-            <div class="mdl-card__title  mdl-color--orange">
-                <h2 class="mdl-card__title-text">Filters</h2>
-            </div>
-             <div class="mdl-card__supporting-text">
-                 <div>
-                   <a href="browse-books.php" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Remove Filter</a>
-                 </div>
-                <?php
-                echo "<p class='mdl-card__title-text'>Subcategories:<p>";
-                $sql = "Select * from Subcategories;";
-
-                echo "<ul class='demo-list-item mdl-list'>";
-                foreach($pdo->query($sql) as $row){
-                    echo"<li><a href='browse-books.php?subcategory=".$row["SubcategoryID"]."'>".$row["SubcategoryName"]."</a></li>";
-                }
-                echo "</ul>";
-                
-                echo "<h4 class='mdl-card__title-text'>Imprints:</h4>";
-                $sql = "Select * from Imprints;";
-                echo "<ul class='demo-list-item mdl-list'>";
-                foreach($pdo->query($sql) as $row){
-                    echo"<li><a href='browse-books.php?imprint=".$row["ImprintID"]."'>".$row["Imprint"]."</a></li>";
-                }
-                echo "</ul>";
-            ?>
-            </div>
-        </div>
-        
-
-            
-        
-        <div class="mdl-cell mdl-cell--8-col card-lesson mdl-card  mdl-shadow--2dp">
+        <div class="mdl-cell mdl-cell--7-col card-lesson mdl-card  mdl-shadow--2dp">
             <div class="mdl-card__title  mdl-color--orange">
                 <h2 class="mdl-card__title-text">Books</h2>
             </div>
@@ -87,35 +62,39 @@
                     
                     <?php
                     
-                        if (isset($_GET['subcategory']))
-                        {
-                        $sql = "select * 
-                                from Books as b 
-                                JOIN Subcategories as s ON b.SubcategoryID=s.SubcategoryID 
-                                JOIN Imprints as i ON b.ImprintID=i.ImprintID
-                                where b.SubcategoryID LIKE'".$_GET['subcategory']."'
-                                ORDER BY Title 
-                                Limit 20;";
+                    $resultBooks = $books->findAll("Title");
+                    $resultEnd = $resultBooks;
+                    
+                    $bookArray = array();
+                    
+                    if(isset($_GET['subcategory']) && !isset($_GET['imprint'])){
+                        foreach($resultEnd as $result) {
+                            if($result['SubcategoryID'] == $_GET['subcategory']) {
+                                $bookArray[] = $result;  
+                            }
                         }
-                        elseif (isset($_GET['imprint'])) {
-                        $sql = "select * 
-                                from Books as b 
-                                JOIN Subcategories as s ON b.SubcategoryID=s.SubcategoryID 
-                                JOIN Imprints as i ON b.ImprintID=i.ImprintID
-                                where b.ImprintID LIKE'".$_GET['imprint']."'
-                                ORDER BY Title 
-                                Limit 20;";
+                    }
+                    else if(isset($_GET['imprint']) && !isset($_GET['subcategory'])) {
+                        foreach($resultEnd as $result) {
+                            if($result['ImprintID'] == $_GET['imprint']) {
+                                $bookArray[] = $result;  
+                            }
                         }
-                        else {
-                        $sql = "select * 
-                                from Books as b 
-                                JOIN Subcategories as s ON b.SubcategoryID=s.SubcategoryID 
-                                JOIN Imprints as i ON b.ImprintID=i.ImprintID
-                                ORDER BY Title 
-                                Limit 20;";
+                    }
+                    else if(isset($_GET['imprint']) && isset($_GET['subcategory'])) {
+                        foreach($resultEnd as $result) {
+                            if($result['SubcategoryID'] == $_GET['subcategory'] && $result['ImprintID'] == $_GET['imprint']) {
+                                $bookArray[] = $result;  
+                            }
                         }
+                    }
+                    else {
+                        $bookArray = $resultEnd;
+                    }
                         
-                        foreach($pdo->query($sql) as $row){
+                        $index = 0;
+                        foreach($bookArray as $row){
+                            if($index < 20) {
                             echo "<tr>
                                     <td class='mdl-data-table__cell--non-numeric'><a href='single-book.php?ISBN10=".$row['ISBN10'].
                                     "'><img src='book-images/tinysquare/".$row["ISBN10"].".jpg'></img></a></td>
@@ -124,15 +103,64 @@
                                     <td class='mdl-data-table__cell--non-numeric'>".$row["SubcategoryName"]."</td>
                                     <td class='mdl-data-table__cell--non-numeric'>".$row["Imprint"]."</td>
                                   </tr>";
+                                  $index++;
+                            }
                             
                         }
                     ?>
                     
                 </tbody>
             </table>
-        </div>
+            
+        </div> <!-- mdl card (books) -->
         
-    </div> 
+         <div class="mdl-cell mdl-cell--1-col card-lesson mdl-card  mdl-shadow--2dp">
+            <div class="mdl-card__title  mdl-color--orange">
+                <h2 class="mdl-card__title-text">Subcategories</h2>
+            </div>
+             <div class="mdl-card__supporting-text">
+                 <div>
+                   <a href="browse-books.php" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Remove Filter</a>
+                 </div>
+                <?php
+                
+                //$sql = "Select * from Subcategories;";
+                
+                echo "<p class='mdl-card__title-text'>Subcategories:<p>";
+                echo "<ul class='demo-list-item mdl-list'>";
+                foreach($subcategories->getAll() as $row){
+                    echo"<li><a href='browse-books.php?subcategory=".$row["SubcategoryID"]."'>".$row["SubcategoryName"]."</a></li>";
+                }
+                echo "</ul>";
+                ?>
+            </div>
+        </div> <!-- mdl card (Subcategories) -->
+                
+                
+                <div class="mdl-cell mdl-cell--1-col card-lesson mdl-card  mdl-shadow--2dp">
+                    <div class="mdl-card__title  mdl-color--orange">
+                        <h2 class="mdl-card__title-text">Imprints</h2>
+                    </div>
+                 <div class="mdl-card__supporting-text">
+                     <div>
+                       <a href="browse-books.php" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Remove Filter</a>
+                     </div>
+                 </div>
+                
+                <?php
+                
+                //$sql = "Select * from Imprints;";
+                
+                echo "<p class='mdl-card__title-text'>Imprints:</p>";
+                echo "<ul class='demo-list-item mdl-list'>";
+                foreach($imprints->getAll() as $row){
+                    echo"<li><a href='browse-books.php?imprint=".$row["ImprintID"]."'>".$row["Imprint"]."</a></li>";
+                }
+                echo "</ul>";
+            ?>
+            </div> <!-- mdl card (Imprints) -->
+        
+    </div> <!-- MDL grid end -->
   
   
 </section>  

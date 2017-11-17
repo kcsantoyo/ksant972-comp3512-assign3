@@ -52,7 +52,7 @@
                         
                         //$sql = "Select EmployeeID, FirstName, LastName from Employees ORDER BY LastName ASC;";
                         
-                         foreach($employees->findAll() as $row){
+                         foreach($employees->findAll('LastName ASC') as $row){
                             echo "<li>
                                   <a href='browse-employees.php?id=".$row['EmployeeID']."'>".
                                   $row['FirstName']." ".$row['LastName'].

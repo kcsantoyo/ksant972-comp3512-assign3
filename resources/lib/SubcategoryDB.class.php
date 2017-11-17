@@ -1,9 +1,9 @@
 <?php
 /*
-   Simple Gateway class for the Subcategories table. 
+   Simple Gateway class for the Subcategory table. 
 
  */
-class SubcategoriesDB {  
+class SubcategoryDB {  
     
     private $connect = null;
     
@@ -19,6 +19,13 @@ class SubcategoriesDB {
     public function getAll() {
         $sql = self::$baseSQL . self::$constraint;
         $statement = DatabaseHelper::runQuery($this->connect, $sql, null);
+        return $statement->fetchAll();
+    }
+    
+    //return all records with associated subcategoryID
+    public function getAllByID($id) {
+        $sql = self::$baseSQL . ' WHERE SubcategoryID=:id ';
+        $statement = DatabaseHelper::runQuery($this->connect, $sql, Array(':id' => $id));
         return $statement->fetchAll();
     }
     
