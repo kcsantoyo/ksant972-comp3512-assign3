@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -15,10 +18,13 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue_grey-orange.min.css">
         <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+
     </HEAD>
 
       <?php 
+      include 'resources/includes/redirect.php';
       include 'resources/includes/connect.php';
+      include 'resources/includes/currentURL.php';
       include 'resources/lib/UniversitiesGateway.class.php';
       include 'resources/lib/StateDB.class.php';
       //$id = $_GET["id"];
@@ -52,7 +58,6 @@
                           </div>
 
                           <div class="mdl-tabs__panel is-active" id="address-panel">
-
                             <?php   
                              //$sql = "select * from Universities where UniversityID LIKE '".$id."';";
                              
@@ -63,11 +68,31 @@
                                 echo "<br/>".$row["City"].", ".$row["State"];
                                 echo "<br/>".$row["Zip"];
                                 echo "<br/><a href='".$row["Website"]."'>".$row["Website"]."</a>";
-                                echo "<br/>Longitude: ".$row["Longitude"].", Latitude: ".$row["Latitude"];
-                              }
+                                echo "<div id='map'></div>";
+                                ?>
+                                
+                                <script type="text/javascript">
+                                function initMap() {
+                                 var uluru = {lat: <?php echo $row["Latitude"]?>, lng: <?php echo $row["Longitude"]?> };
+                                 var map = new google.maps.Map(document.getElementById('map'), {
+                                  zoom: 17,
+                                  center: uluru
+                                 });
+                                 var marker = new google.maps.Marker({
+                                 position: uluru,
+                                 map: map
+                                 });
+                                }
+                                </script>
+                                
+                            <?php
+                                echo "<script language='javascript'> initMap() </script>";
+                                echo "<script language='javascript' async defer src='https://maps.googleapis.com/maps/api/js?key=AIzaSyBdDRfl6i_MsKQM_OKDwoi3ywOpr-HXkSs&callback=initMap'>
+                                </script>";
+                             }
+                            
                             ?>
-
-
+                            
                           </div>
                           
                         </div>
@@ -83,6 +108,7 @@
                 
                 
                     <select form="state" name='state'> 
+                        <option value="" disabled selected>Choose a State</option>
                         <?php
                          //$sql = "select * from States;";
                         
@@ -92,13 +118,12 @@
                     ?>
                     </select>
                 <form action="browse-universities.php" method="get" id="state">
-                    
-                    <input class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit" name=""/>
-               
-               <div>
-                   <a href="browse-universities.php" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Remove Filter</a>
-               </div>
-               
+                    <div class="btnMargin">
+                        <input class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit" name="" value="Filter Universities"/>
+                    </div>   
+                   <div class="btnMargin">
+                       <a href="browse-universities.php" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Remove Filter</a>
+                   </div>
                </form>
                
                 <div class="mdl-card__supporting-text">
@@ -116,10 +141,10 @@
                         }
                         
                         foreach($result as $row) {
-                            echo "<li>
-                                  <a href='browse-universities.php?id=".$row['UniversityID']."'>"
-                                  .$row['Name']
-                                    ."</a></li>";
+                                echo "<li>
+                                      <a href='browse-universities.php?id=".$row['UniversityID']."'>"
+                                      .$row['Name']
+                                        ."</a></li>";
                         }
                   ?>
 

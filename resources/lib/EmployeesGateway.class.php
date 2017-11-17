@@ -13,6 +13,10 @@ class EmployeesGateway extends TableDataGateway {
         
     }
     
+    protected function getSelectStatementDistinctCity() {
+        return "SELECT DISTINCT City FROM Employees ";
+    }
+    
     protected function getOrderFields() {
         return 'LastName, FirstName';
     }

@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -18,9 +21,14 @@
 <body>
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer
             mdl-layout--fixed-header">
-  
-    <?php include 'resources/includes/header.php'; ?>
-    <?php include 'resources/includes/nav.php'; ?>
+    
+    <?php
+        include 'resources/includes/redirect.php';
+        include 'resources/includes/header.php';
+        include 'resources/includes/nav.php';
+        include 'resources/includes/redirect.php';  
+    ?>
+
     
      <main class="mdl-layout__content mdl-color--grey-50">
         <section class="page-content">  
