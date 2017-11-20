@@ -21,6 +21,7 @@ session_start();
     </head>
 
 <?php 
+include 'resources/includes/redirect.php';
 include 'resources/includes/connect.php';
 include 'resources/includes/phpfunctions.php';
 include 'resources/lib/BooksGateway.class.php';
