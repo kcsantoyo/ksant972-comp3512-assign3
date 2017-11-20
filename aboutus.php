@@ -24,16 +24,11 @@ session_start();
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer
             mdl-layout--fixed-header">
             
-<<<<<<< HEAD
-    <?php include 'resources/includes/header.php'; ?>
-    <?php include 'resources/includes/nav.php'; ?>
-=======
     <?php 
           include 'resources/includes/redirect.php';
           include 'resources/includes/header.php';
           include 'resources/includes/nav.php';
           include 'resources/includes/currentURL.php'; ?>
->>>>>>> Finished the Data Access layer, and retro fitting all the classes, changed the About us page
     
     <main class="mdl-layout__content mdl-color--grey-50">
         <section class="page-content">
@@ -64,6 +59,7 @@ session_start();
                 </div>
                 <div class="mdl-card__supporting-text">
                     <ul>
+                        <li><strong>George Chase: </strong> Completed the Program Design, Login/Logout, Browse Employees, Analytics</li>
                         <li><strong>Kim Santoyo: </strong> Completed the Navigation, User Profile, Login/Logout, Analytics</li>
                         <li><strong>Jamie Nguyen: </strong> Completed the Browse Employees, Simple Search, Analytics</li>
                         <li><strong>Nick Anderson: </strong> Completed the Browse Universites, Browse Employees, Single Book, Analytics</li>

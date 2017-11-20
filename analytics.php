@@ -27,20 +27,6 @@ session_start();
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer
             mdl-layout--fixed-header">
             
-<<<<<<< HEAD
-    <?php include 'resources/includes/header.php'; ?>
-    <?php include 'resources/includes/nav.php'; ?>
-    
-    <main class="mdl-layout__content mdl-color--grey-50">
-        <section class="page-content">
-
-        <div class="mdl-grid">
-            <div class="mdl-cell mdl-cell--12-col card-lesson mdl-card  mdl-shadow--2dp">
-                <div class="mdl-card__title mdl-color--orange mdl-color-text--black">
-                    <h2 class="mdl-card__title-text">Analytics</h2>
-                </div>
-                <div class="mdl-card__supporting-text">
-=======
     <?php
     include 'resources/includes/redirect.php';
     include 'resources/includes/header.php';
@@ -197,7 +183,6 @@ session_start();
                 </div>
             </div>
         </div>
->>>>>>> Finished the Data Access layer, and retro fitting all the classes, changed the About us page
             
     </body>
 </html>

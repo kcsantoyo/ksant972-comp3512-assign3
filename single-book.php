@@ -25,13 +25,6 @@ include 'resources/includes/connect.php';
 include 'resources/includes/phpfunctions.php';
 include 'resources/lib/BooksGateway.class.php';
 
-<<<<<<< HEAD
-<?php 
-include 'resources/includes/connect.php';
-include 'resources/lib/BooksGateway.class.php';
-
-=======
->>>>>>> Finished the Data Access layer, and retro fitting all the classes, changed the About us page
 $books = new BooksGateway($connection);
 
                   
@@ -94,12 +87,8 @@ $books = new BooksGateway($connection);
                                 $result = $books->findUniversitiesByISBN();
                                 foreach ($result as $row) {
                                     if($row['ISBN10'] == $_GET['ISBN10']) {
-<<<<<<< HEAD
-                                        echo "<li>  ".$row['Name']."</li>";
-=======
                                         echo '<li><a href="browse-universities.php?id='. $row['UniversityID'] . '">' .
                                             $row['Name'] .'</a></li>';
->>>>>>> Finished the Data Access layer, and retro fitting all the classes, changed the About us page
                                     }
                                 }
                         ?>    

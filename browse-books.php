@@ -148,11 +148,7 @@ session_start();
                         <h2 class="mdl-card__title-text">Imprints</h2>
                     </div>
                      <div class="mdl-card__supporting-text">
-<<<<<<< HEAD
-                         <div>
-=======
                          <div class="btnMargin">
->>>>>>> Finished the Data Access layer, and retro fitting all the classes, changed the About us page
                            <a href="browse-books.php" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Remove Filter</a>
                      </div>
                 <?php

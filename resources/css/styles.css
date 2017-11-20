@@ -6,10 +6,6 @@ header h1.mdl-layout-title {
     color: #ff6e40;
 }
 
-<<<<<<< HEAD
-ul li{
-  list-style-type: none;
-=======
 #filter {
   cursor: pointer;
 }
@@ -50,7 +46,6 @@ ul li{
   width: 400px;
   background-color: grey;
   
->>>>>>> Finished the Data Access layer, and retro fitting all the classes, changed the About us page
 }
 
 .profile {
