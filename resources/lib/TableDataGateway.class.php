@@ -117,13 +117,90 @@ abstract class TableDataGateway
      return $statement->fetchAll();
   }
   
+  /*
+      Returns all records for the Single Book information
+  */
   public function grabAllSingleInfo() {
      $sql = $this->getSelectStatementSingleAllInfo();
      
      $statement = DatabaseHelper::runQuery($this->connection, $sql, null);
      return $statement->fetchAll();
   }
+  
+  /*
+      Returns all Distinct Cities
+  */
+  public function grabAllDistinctCities($sortFields=null) {
+     $sql = $this->getSelectStatementDistinctCity();
+     if(! is_null($sortFields)) {
+         $sql .= ' ORDER BY ' . $sortFields;
+      }
+     
+     $statement = DatabaseHelper::runQuery($this->connection, $sql, null);
+     return $statement->fetchAll();
+  }
+  
+  public function findAllEmployeesByLastName($last) {
+     $sql = $this->getSelectStatement() . ' WHERE LastName ' . '=:last';
+     
+     $statement = DatabaseHelper::runQuery($this->connection, $sql, Array(':last' => $last));
+     return $statement->fetchAll();
+  }
+  
+  public function findAllEmployeesByCity($city) {
+     $sql = $this->getSelectStatement() . ' WHERE City ' . '=:city';
+     
+     $statement = DatabaseHelper::runQuery($this->connection, $sql, Array(':city' => $city));
+     return $statement->fetchAll();
+  }
+  
+  public function findAllEmployeesByCityAndLastName($last, $city) {
+     $sql = $this->getSelectStatement() . ' WHERE City ' . '=:city' . ' AND ' . ' LastName ' . '=:last';
+     
+     $statement = DatabaseHelper::runQuery($this->connection, $sql, Array(':city' => $city, ':last' => $last));
+     return $statement->fetchAll();
+  }
+  
+  public function getTop15Country() {
+     $sql = $this->getSelectStatementForTop15Countries();
+     
+     $statement = DatabaseHelper::runQuery($this->connection, $sql, null);
+     return $statement->fetchAll();
+  }
+  
+  public function getTop10AdoptedBooks() {
+     $sql = $this->getSelectStatementTop10AdoptedBooks();
+     
+     $statement = DatabaseHelper::runQuery($this->connection, $sql, null);
+     return $statement->fetchAll();
+  }
+  
+  public function getTotalVisitsInJune() {
+     $sql = $this->getSelectStatementTotalVisitsInJune() . " WHERE DateViewed BETWEEN '05/31/2017' AND '07/01/2017'";
+     
+     $statement = DatabaseHelper::runQuery($this->connection, $sql, null);
+     return $statement->fetch();
+  }
+  
+  public function getTotalUniqueVisits() {
+     $sql = $this->getSelectStatementTotalUniqueVisits();
+     
+     $statement = DatabaseHelper::runQuery($this->connection, $sql, null);
+     return $statement->fetchAll();
+  }
 
+   public function getTotalToDosInJune() {
+      $sql = $this->getSelectStatementEmployeeToDosInJune() . " WHERE DateBy BETWEEN '2017-05-31' AND '2017-07-01'";
+   
+      $statement = DatabaseHelper::runQuery($this->connection, $sql, null);
+      return $statement->fetch();
+   }
+   
+   public function getTotalNumEmpMsgJune() {
+      $sql = $this->getSelectStatementEmployeeMessagesInJune() . " WHERE MessageDate BETWEEN '2017-05-31' AND '2017-07-01'";
+      
+      $statement = DatabaseHelper::runQuery($this->connection, $sql, null);
+      return $statement->fetch();      
+   }
 }
-
 ?>

@@ -42,6 +42,8 @@ class BooksGateway extends TableDataGateway {
     protected function getPrimaryKeyName() {
         return "BookID";
     }
+    
+
 }
 
 ?>

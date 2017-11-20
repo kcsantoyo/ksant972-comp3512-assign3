@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -8,27 +11,23 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.blue_grey-orange.min.css">
 
-        <link rel="stylesheet" href="resources/css/styles.css"></body>
+        <link rel="stylesheet" href="resources/css/styles.css">
 
         <script src="https://code.jquery.com/jquery-1.7.2.min.js" ></script>
 
         <script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
-    </HEAD>
+        
+        <script src="resources/js/single-book.js"></script>
+    </head>
 
 <?php 
 include 'resources/includes/connect.php';
+include 'resources/includes/phpfunctions.php';
 include 'resources/lib/BooksGateway.class.php';
 
 $books = new BooksGateway($connection);
 
-                    function generatetableRow($title, $data)
-                    {
-                         $markup = "<tr>
-                                    <td class='mdl-data-table__cell--non-numeric'><strong>".$title."</strong></td>
-                                    <td class='mdl-data-table__cell--non-numeric'>".$data."</td> 
-                                    </tr>";
-                        return $markup;
-                    }
+                  
 
 ?>
 
@@ -88,7 +87,8 @@ $books = new BooksGateway($connection);
                                 $result = $books->findUniversitiesByISBN();
                                 foreach ($result as $row) {
                                     if($row['ISBN10'] == $_GET['ISBN10']) {
-                                        echo "<li>  ".$row['Name']."</li>";
+                                        echo '<li><a href="browse-universities.php?id='. $row['UniversityID'] . '">' .
+                                            $row['Name'] .'</a></li>';
                                     }
                                 }
                         ?>    
@@ -113,31 +113,47 @@ $books = new BooksGateway($connection);
                                 
                                 $result = $books->grabAllSingleInfo();
                                 
+                                $hasBeenFound = false;
+                                
                                 foreach($result as $row) {
-                                    if($row['ISBN10'] == $_GET['ISBN10']){
+                                    if($row['ISBN10'] == $_GET['ISBN10'] && $hasBeenFound == false){
+                                            
+                                    echo "<h2 class='mdl-card__title-text'>".$row["Title"]."</h2></div>";
+               
+                                    echo "<center><img id='currentImg' src='book-images/medium/".$row["ISBN10"].".jpg'/></center>
+                                        <div id='imgPop' class='lrgImg'>
+                                            <img class='modal-content' id='bookImage'>
+                                        </div>";
                                         
-                                echo "<h2 class='mdl-card__title-text'>".$row["Title"]."</h2></div>";
-                                echo "<div class='.mdl-card__actions'>
-                                
-                                <center><img src='book-images/medium/".$row["ISBN10"].".jpg'/></center>
-                                
-                                <table class='mdl-data-table mdl-js-data-table full-width'>";
-                                echo generatetableRow("ISBN10", $row["ISBN10"]);
-                                echo generatetableRow("ISBN13", $row["ISBN13"]);
-                                echo generatetableRow("Copyright Year", $row["CopyrightYear"]);
-                                echo generatetableRow("Subcategory", $row["SubcategoryName"]);
-                                echo generatetableRow("Imprint", $row["Imprint"]);
-                                echo generatetableRow("Production Status", $row["Status"]);
-                                echo generatetableRow("Binding Type", $row["BindingType"]);
-                                echo generatetableRow("Trim Size", $row["TrimSize"]);
-                                echo generatetableRow("Page Count", $row["PageCountsEditorialEst"]);
-                                echo generatetableRow("Description", $row["Description"]);
-                                echo "</table>
-                                </div>";
+                                    $largeISBN = $row['ISBN10'];
+    
+                                    echo "<table id='singleBookTable' class='mdl-data-table mdl-js-data-table'>";
+                                    echo generatetableRow("ISBN10", $row["ISBN10"]);
+                                    echo generatetableRow("ISBN13", $row["ISBN13"]);
+                                    echo generatetableRow("Copyright Year", $row["CopyrightYear"]);
+                                    echo generatetableRow("Subcategory", '<a href="browse-books.php?subcategory='. $row['SubcategoryID'] . '">' .
+                                            $row["SubcategoryName"]) . '</a>';
+                                    echo generatetableRow("Imprint", '<a href="browse-books.php?imprint='. $row['ImprintID'] . '">' .
+                                            $row["Imprint"]) . '</a>';
+                                    echo generatetableRow("Production Status", $row["Status"]);
+                                    echo generatetableRow("Binding Type", $row["BindingType"]);
+                                    echo generatetableRow("Trim Size", $row["TrimSize"]);
+                                    echo generatetableRow("Page Count", $row["PageCountsEditorialEst"]);
+                                    echo "<tr>
+                                            <td class='mdl-data-table__cell--non-numeric'><strong>Description</strong></td>
+                                            <td class='mdl-data-table__cell--non-numeric'><p id='bookData'>".$row['Description']."</p></td> 
+                                            </tr>";
+                                    echo "</table>
+                                    </div>";
+                                    $hasBeenFound = true;
+                                    echo '<div id="ISBN">' . $largeISBN . '</div>';
                                     }
                                 }
                     ?>
+
+                            
                     
+                            
                     </div>
                 </div>
                 

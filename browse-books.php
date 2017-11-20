@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -16,13 +19,14 @@
     </HEAD>
 
 <?php 
+    include 'resources/includes/redirect.php';
     include 'resources/includes/connect.php';
+    include 'resources/includes/currentURL.php';
+    include 'resources/lib/BooksGateway.class.php';
     include 'resources/lib/SubcategoryDB.class.php';
     include 'resources/lib/ImprintDB.class.php';
-    include 'resources/lib/BooksGateway.class.php';
     //$subcategoryId = $_GET['subcategory'];
     //$imprintId = $_GET['imprint'];
-    
     $subcategories = new SubcategoryDB($connection);
     $imprints = new ImprintDB($connection);
     $books = new BooksGateway($connection);
@@ -32,8 +36,10 @@
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer
             mdl-layout--fixed-header">
   
-    <?php include 'resources/includes/header.php'; ?>
-    <?php include 'resources/includes/nav.php'; ?>
+    <?php 
+    include 'resources/includes/header.php';
+    include 'resources/includes/nav.php';
+    ?>
 
 <main class="mdl-layout__content mdl-color--grey-50">
         <section class="page-content">
@@ -54,7 +60,7 @@
                         <th class="mdl-data-table__cell--non-numeric">Title</th>
                         <th class="mdl-data-table__cell--non-numeric">Year</th>
                         <th class="mdl-data-table__cell--non-numeric">Subcategory</th>
-                        <th class="mdl-data-table__cell--non-numeric">Imprint</th>
+                        <th class="mdl-data-table__cell--non-numeric">Publisher</th>
                     </tr>
                 
                 </thead>
@@ -119,7 +125,7 @@
                 <h2 class="mdl-card__title-text">Subcategories</h2>
             </div>
              <div class="mdl-card__supporting-text">
-                 <div>
+                 <div class="btnMargin">
                    <a href="browse-books.php" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Remove Filter</a>
                  </div>
                 <?php
@@ -142,7 +148,7 @@
                         <h2 class="mdl-card__title-text">Imprints</h2>
                     </div>
                      <div class="mdl-card__supporting-text">
-                         <div>
+                         <div class="btnMargin">
                            <a href="browse-books.php" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Remove Filter</a>
                      </div>
                 <?php
