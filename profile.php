@@ -23,6 +23,7 @@ session_start();
             mdl-layout--fixed-header">
     
     <?php 
+    include 'resources/includes/redirect.php';
     include 'resources/includes/header.php'; 
     include 'resources/includes/nav.php';
     include 'resources/includes/connect.php';
