@@ -1,7 +1,8 @@
-  <header onclick="hideBtn();" class="mdl-layout__header">
+  <header class="mdl-layout__header">
     <div class="mdl-layout__header-row">
-     <h1 class="mdl-layout-title"><span>Assignment</span> 2</h1>
+     <h1 class="mdl-layout-title"><span>Assignment</span> 3</h1>
      <link rel="stylesheet" href="resources/css/styles.css">
+     <script src="https://code.jquery.com/jquery-1.7.2.min.js" ></script>
      <script src="resources/js/header.js"></script>
 
      
@@ -35,18 +36,17 @@
         </div>
       </div>  
 -->
+        <div id="searchIcon">
+            <div class="mdl-tooltip" for="searchIcon">FIND EMPLOYEE</div>
+            <label class="mdl-button mdl-js-button mdl-button--icon">
+            <i class="material-icons">search</i>
+        </div>
+            
      			<form action="browse-employees.php" method='GET'>
-					<div onclick="showBtn();" class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
-						<label onclick="showBtn();" id="searchIcon" class="mdl-button mdl-js-button mdl-button--icon" for="site-search">
-							<div class="mdl-tooltip" for="searchIcon">Find Employee</div>
-							<i class="material-icons">search</i>
-						</label>
-						<div class="mdl-textfield__expandable-holder" for="site-search">
-						    <input class="mdl-textfield__input" name="find" type="search" id="site-search" />
-						    <!--<label class="mdl-textfield__label" for="site-search">Search</label>-->
+						<div id="searchBox">
+						    <input type="text" name="find" placeholder="Enter City or Last Name"/>
+						    <button id="searchBtn" type="submit">Search</button>
 						</div>
-						<button id="searchBtn" type="submit">Search</button>
-					</div>
 				</form>
     </div>
 

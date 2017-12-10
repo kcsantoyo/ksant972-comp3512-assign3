@@ -16,12 +16,21 @@ session_start();
         <script src="https://code.jquery.com/jquery-1.7.2.min.js" ></script>
 
         <script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+        <script type="text/javascript" src="resources/js/login.js"></script>
     
 </head>
     <body>
         
  <div id="login_layout" class="mdl-layout mdl-js-layout mdl-color--grey-100">
 	<main id="login_layout_content" class="mdl-layout__content">
+	    <?php
+            if (isset($_GET['error'])) {
+                $errorCode = $_GET['error'];
+                echo "<div id='errorId'>" . $errorCode . "</div>";
+            }
+        ?>
+	    
+	    
 	    <section class="page-content">
 		<div class="mdl-card mdl-shadow--6dp">
 			<div class="mdl-card__title mdl-color--primary mdl-color-text--black">
@@ -30,11 +39,11 @@ session_start();
 	  	<div class="mdl-card__supporting-text">
 				<form action='verification.php' method='POST'>
 					<div class="mdl-textfield mdl-js-textfield">
-						<input class="mdl-textfield__input" type="text" name="username" />
+						<input id="userField"class="mdl-textfield__input" type="text" name="username" />
 						<label class="mdl-textfield__label" for="username">Username</label>
 					</div>
 					<div class="mdl-textfield mdl-js-textfield">
-						<input class="mdl-textfield__input" type="password" name="password"/>
+						<input id="passField" class="mdl-textfield__input" type="password" name="password"/>
 						<label class="mdl-textfield__label" for="userpass">Password</label>
 					</div>
 			</div>
@@ -43,41 +52,11 @@ session_start();
 			</div>
 			</form>
 		</div>
+		<div>
+            <p>Don't have a login? Click <a href="register.php"><u>Here</u></a> to create one!</p>
+        </div>
 		 </section>
 	</main>
 </div>
-
-<?php
-    if (isset($_GET['error'])) {
-        echo '<script language="javascript">';
-        echo 'alert("Login Unsuccessful")';
-        echo '</script>';
-    }
-?>
 </body>
 </html>
-
-     <!-- <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
-            <main class="mdl-layout__content mdl-color--grey-50">
-                <section class="page-content">
-                    <div class="mdl-grid">
-                        <div class="mdl-layout-spacer"></div>
-                        
-                            <div class="mdl-cell mdl-cell--4-col">
-                                <div class="mdl-card__title mdl-color--orange mdl-color-text--black">
-                                    <h2 class="mdl-card__title-text">Login</h2>
-                                </div>
-                                <form action='verification.php' method='post'>
-                                    Username: <input class="mdl-textfield__input" type="text" name="username">
-                                    Password:  <input class="mdl-textfield__input" type="password" name="password"></input>
-                                    <input class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit" value='Submit'/>
-                                </form>
-                            </div>
-                        <div class="mdl-layout-spacer"></div>
-                    </div>
-                </section>
-            </main>
-        </div>
-    </body>
-</html>
--->

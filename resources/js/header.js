@@ -1,11 +1,16 @@
 /*
     Simple Search Toolbar
 */
-function showBtn() {
-    document.getElementById("searchBtn").style.visibility = 'visible';
-}
-
-
-function hideBtn() {
-    document.getElementById("searchBtn").style.visibility = 'hidden';
-}                          
+$(document).ready( function() {
+    $("#searchBox").hide();
+    
+    $("#searchIcon").on("click", function() {
+        $("#searchIcon").hide();
+        $("#searchBox").show();
+    });
+    
+    $("#searchBtn").on("click", function() {
+         $("#searchIcon").show(); 
+         $("#searchBox").hide();
+    });
+});

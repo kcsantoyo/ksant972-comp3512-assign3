@@ -141,9 +141,10 @@ abstract class TableDataGateway
   }
   
   public function findAllEmployeesByLastName($last) {
-     $sql = $this->getSelectStatement() . ' WHERE LastName ' . '=:last';
+     $sql = $this->getSelectStatement() . "WHERE LastName LIKE " . ':last';
+     $wildLast = $last . "%";
      
-     $statement = DatabaseHelper::runQuery($this->connection, $sql, Array(':last' => $last));
+     $statement = DatabaseHelper::runQuery($this->connection, $sql, Array(':last' => $wildLast));
      return $statement->fetchAll();
   }
   
@@ -155,9 +156,31 @@ abstract class TableDataGateway
   }
   
   public function findAllEmployeesByCityAndLastName($last, $city) {
-     $sql = $this->getSelectStatement() . ' WHERE City ' . '=:city' . ' AND ' . ' LastName ' . '=:last';
+     $sql = $this->getSelectStatement() . 'WHERE City ' . '=:city' . ' AND ' . 'LastName LIKE ' . ':last';
+     $wildLast = $last . "%";
      
-     $statement = DatabaseHelper::runQuery($this->connection, $sql, Array(':city' => $city, ':last' => $last));
+     $statement = DatabaseHelper::runQuery($this->connection, $sql, Array(':city' => $city, ':last' => $wildLast));
+     return $statement->fetchAll();
+  }
+  
+  public function getAllUniqueCountryCodes() {
+     $sql = $this->getSelectStatementUniqueCountryCodes();
+     
+     $statement = DatabaseHelper::runQuery($this->connection, $sql, null);
+     return $statement->fetchAll();
+  }
+  
+  public function getCountryAndVisits($countryCode) {
+     $sql = $this->getSelectStatementForCountryAndVisits() . ' WHERE c.CountryCode ' . '=:countryCode' . ' GROUP BY c.CountryCode ';
+     
+     $statement = DatabaseHelper::runQuery($this->connection, $sql, Array(':countryCode' => $countryCode));
+     return $statement->fetchAll();
+  }
+  
+  public function getGeoChartData() {
+     $sql = $this->getSelectStatementForCountryAndVisits() . ' GROUP BY CountryName HAVING COUNT(VisitID) > 10';
+      
+     $statement = DatabaseHelper::runQuery($this->connection, $sql, null);
      return $statement->fetchAll();
   }
   
@@ -175,6 +198,13 @@ abstract class TableDataGateway
      return $statement->fetchAll();
   }
   
+  public function getDailyVisitsInJune(){
+      $sql = $this->getSelectStatementForDailyVisitsInJune();
+      
+      $statement = DatabaseHelper::runQuery($this->connection, $sql, null);
+      return $statement->fetchAll();
+  }
+  
   public function getTotalVisitsInJune() {
      $sql = $this->getSelectStatementTotalVisitsInJune() . " WHERE DateViewed BETWEEN '05/31/2017' AND '07/01/2017'";
      
@@ -186,7 +216,7 @@ abstract class TableDataGateway
      $sql = $this->getSelectStatementTotalUniqueVisits();
      
      $statement = DatabaseHelper::runQuery($this->connection, $sql, null);
-     return $statement->fetchAll();
+     return $statement->fetch();
   }
 
    public function getTotalToDosInJune() {
@@ -202,5 +232,53 @@ abstract class TableDataGateway
       $statement = DatabaseHelper::runQuery($this->connection, $sql, null);
       return $statement->fetch();      
    }
+   
+   public function addUser($userID, $first, $last, $address, $city, $region, $country, $postal, $phone, $email) {
+       $sql = $this->getInsertStatement() . " VALUES ('$userID', '$first', '$last', '$address', '$city', '$region', '$country', '$postal', '$phone', '$email')";
+       
+       DatabaseHelper::runQuery($this->connection, $sql, null);
+   }
+   
+   public function addUserLogin($userID, $email, $password, $salt, $date) {
+       $sql = $this->getInsertStatement() . " VALUES ('$userID', '$email', '$password', '$salt', '$date', '$date')";
+       
+       DatabaseHelper::runQuery($this->connection, $sql, null);
+   }
+   
+   public function getLastUserID() {
+       $sql = $this->getSelectStatement() . " ORDER BY UserID DESC LIMIT 1";
+       
+       $statement = DatabaseHelper::runQuery($this->connection, $sql, null);
+       return $statement->fetch();
+   }
+   
+   public function checkIfUserExists($userName) {
+       $sql = $this->getSelectStatement() . ' WHERE UserName ' . '=:userName';
+       
+       $statement = DatabaseHelper::runQuery($this->connection, $sql, Array(':userName' => $userName));
+       return $statement->fetchAll();
+   }
+   
+   public function updateUserInfo($infoArray, $id) {
+       $sql = $this->getUpdateStatement() . ' ';
+       $i = 0;
+       foreach($infoArray as $key => $value){
+           $sql .= $this->getUpdateFields($key, $value);
+           if($key != 'Email'){
+               $sql .= ", ";
+           }
+       }
+   
+       $sql .= ' WHERE ' . $this->getPrimaryKeyName() . ' =:id';
+       echo $sql;
+       DatabaseHelper::runQuery($this->connection, $sql, Array(':id' => (int)$id));
+   }
+   
+   public function updateUserLoginInfo($email, $currentTime, $id) {
+        $sql = $this->getUpdateStatement($email, $currentTime) . ' WHERE ' . $this->getPrimaryKeyName() . ' = :id ';
+        
+        DatabaseHelper::runQuery($this->connection, $sql, Array(':id' => $id)); 
+   }
+   
 }
 ?>

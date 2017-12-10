@@ -75,7 +75,7 @@ session_start();
                                 function initMap() {
                                  var uluru = {lat: <?php echo $row["Latitude"]?>, lng: <?php echo $row["Longitude"]?> };
                                  var map = new google.maps.Map(document.getElementById('map'), {
-                                  zoom: 17,
+                                  zoom: 18,
                                   center: uluru
                                  });
                                  var marker = new google.maps.Marker({

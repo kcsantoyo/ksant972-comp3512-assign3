@@ -45,7 +45,7 @@ session_start();
                         <li><img src="resources/images/porg.jpeg" class="mdl-card__media"></li>
                         <li><strong>Creators: </strong>George Chase, Nick Anderson, Kim Santoyo, Jamie Nguyen</li>
                         <li><strong>Course Name:</strong> COMP 3512 - Web II</li>
-                        <li><strong>Assignment: </strong>2</li>
+                        <li><strong>Assignment: </strong>3</li>
                         <li><strong>Date:</strong> <?php echo date('l jS \of F Y h:i:s A'); ?></li>
                         <li><strong>Purpose: </strong>The main purpose of this website is educational only, it is for the COMP 3512 course taught by Randy Connolly
                         at Mount Royal University</li>
@@ -76,7 +76,10 @@ session_start();
                         <li><strong>MDL (Materials Design Lite)</strong></li>
                         <li><strong>All images were from Google minus the book covers</strong></li>
                         <li><strong>Some sweet javascript was incorporated in this bad boy</strong></li>
-                        <li><a href='https://github.com/kcsantoyo/ksant972-comp3512-assign2'>https://github.com/kcsantoyo/ksant972-comp3512-assign2</a></li>
+                        <li><a href='https://github.com/kcsantoyo/ksant972-comp3512-assign3.git'>https://github.com/kcsantoyo/ksant972-comp3512-assign3</a></li>
+                        <li><strong>Portions of Geo Chart code taken from</strong> <a href='https://developers.google.com/chart/interactive/docs/gallery/geochart'>Google  Geo Charts Guide</a></li>
+                        <li><strong>Portions of Area Chart code taken from</strong> <a href='https://developers.google.com/chart/interactive/docs/gallery/areachart'>Google Area Charts Guide</a></li>
+                    </ul>
                     </ul>
                 </div>
             </div>

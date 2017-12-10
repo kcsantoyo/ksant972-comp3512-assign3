@@ -10,12 +10,12 @@ window.onload = function() {
     title.addEventListener("click", function() {
         if (content.style.display == 'none') {
             content.style.display = 'block';
-            title.textContent = 'Hide Filters';
+            title.textContent = 'Filters: Hide';
             addCardBorder();
         }
         else {
             content.style.display = 'none';
-            title.textContent = 'Show Filters';
+            title.textContent = 'Filters: Show';
             removeCardBorder();
         }
     });

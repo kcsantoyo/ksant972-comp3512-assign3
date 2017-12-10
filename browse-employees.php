@@ -207,7 +207,7 @@ session_start();
               <!-- / mdl-cell + mdl-card -->
               <div id="cardBorder" class="mdl-cell mdl-cell--2-col card-lesson mdl-card">
                 <div id="cardTitle" class="mdl-card__title mdl-color--orange">
-                  <h2 id="filter" class="mdl-card__title-text">Show Filters</h2>
+                  <h2 id="filter" class="mdl-card__title-text">Filters: Show</h2>
                 </div>
                 <div id="filterContent" class="mdl-card__supporting-text">
                   <ul class="demo-list-item mdl-list">

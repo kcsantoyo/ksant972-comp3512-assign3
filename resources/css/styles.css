@@ -37,9 +37,17 @@ header h1.mdl-layout-title {
   transition: width 0.4s ease-in-out;
 }
 
-#searchBtn {
-  visibility: hidden;
+#legend {
+   background-color: #616161 ;
+    color: white;
+   margin: 0 auto;
+   width: 90%;
+   padding: 0.25em;
+   text-align: center;
+   font-weight: bold;
+   font-size: 24px;
 }
+
 
 #map {
   height: 400px;
@@ -69,6 +77,70 @@ header h1.mdl-layout-title {
 
 .page-content {
   margin: 10px;   
+}
+
+.highlight {
+    background-color: #FFE0B2;
+}    
+.error {
+    background: #FFCDD2 url(error.png) no-repeat 98% center;
+    box-shadow: 0 0 5px #FF5252;
+    border-color: #FF1744;    
+}
+
+.hidden { 
+    display: none;
+}
+
+.visible { 
+    display: block;
+}
+
+.box {
+    width:20em;
+    margin:  20px auto;
+    padding: 0.5em;
+    -webkit-box-shadow: 0px 0px 5px rgba(0,0,0,.8);
+    -moz-box-shadow: 0px 0px 5px rgba(0,0,0,.8);
+    box-shadow: 0px 0px 5px rgba(0,0,0,.8);
+    background-color:#fff ; 
+    text-align: left;
+}
+
+#errors {
+  margin: 20px auto;
+  width: 350px; 
+  border-radius: 8px/7px; 
+  background-color: #ebebeb; 
+  box-shadow: 1px 2px 5px rgba(0,0,0,.31); 
+  border: solid 1px #cbc9c9;    
+}
+#errors p { padding: 10px; }
+
+.btn {
+  -webkit-border-radius: 3;
+  -moz-border-radius: 3;
+  border-radius: 3px;
+  height: 32px;
+  color: black;
+  font-size: 14px;
+  background: #FF9100;
+  padding: 5px 20px 5px 20px;
+  text-decoration: none;
+}
+
+.btn:hover {
+  background: #FFAB40;
+  text-decoration: none;
+}
+
+.rectangle {
+   background-color: #BDBDBD;
+   padding: 0.5em;
+    margin-bottom: 5px;
+}
+.centered {
+   text-align: center;
 }
 
 main header {

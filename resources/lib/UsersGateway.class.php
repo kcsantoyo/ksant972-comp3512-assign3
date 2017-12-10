@@ -1,6 +1,6 @@
 <?php
 
-include 'TableDataGateway.class.php';
+include_once 'TableDataGateway.class.php';
 
 class UsersGateway extends TableDataGateway {
 
@@ -13,12 +13,24 @@ class UsersGateway extends TableDataGateway {
         
     }
     
+    protected function getInsertStatement() {
+        return "INSERT INTO Users (UserID, FirstName, LastName, Address, City, Region, Country, Postal, Phone, Email) ";
+    }
+    
+    protected function getUpdateStatement() {
+        return "UPDATE Users SET";
+    }
+    
+    protected function getUpdateFields($field, $value) {
+        return $field." = '".$value."'";
+    }
+    
     protected function getOrderFields() {
         return 'LastName, FirstName';
     }
     
     protected function getPrimaryKeyName() {
-        return "UserID";
+        return 'UserID';
     }
 }
 

@@ -57,7 +57,8 @@ session_start();
                     echo generatetableRow("Country", $userResult['Country']);
                     echo generatetableRow("Phone", $userResult['Phone']);
                     echo generatetableRow("Email", $userResult['Email']);
-                    echo "</table>
+                    echo "</table>";
+                    echo "<center><a href='edit-info.php'>Edit Info</a></center>
                                     </div>";
                 ?>
             </div>

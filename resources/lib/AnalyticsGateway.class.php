@@ -36,8 +36,21 @@ class AnalyticsGateway extends TableDataGateway {
         return "SELECT Count(DISTINCT CountryCode) as uniqueCountries FROM BookVisits";
     }
     
+    protected function getSelectStatementUniqueCountryCodes() {
+        return "SELECT DISTINCT CountryCode FROM BookVisits";
+    }
+    
     protected function getSelectStatementEmployeeMessagesInJune() {
         return "SELECT count(MessageID) as numMsg FROM EmployeeMessages";
+    }
+    
+    protected function getSelectStatementForCountryAndVisits() {
+        return "SELECT CountryName, Count(VisitID) as visitCount FROM Countries as 
+        c JOIN BookVisits as b ON c.CountryCode = b.CountryCode";
+    }
+    
+    protected function getSelectStatementForDailyVisitsInJune() {
+        return "SELECT DateViewed, Count(IpAddress) as dailyVisit FROM BookVisits WHERE DateViewed >= '06/01/2017'  AND DateViewed < '06/31/2017' GROUP BY DateViewed ";
     }
     
     protected function getSelectStatement() {
