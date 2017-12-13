@@ -208,7 +208,7 @@ $.get("service-chartCountryVisits.php")
                   }
                   
                 var options = {
-                    colorAxis: {colors: ['#FFDBC0', '#FF8831']}
+                    colorAxis: {colors: ['#FFECDD', '#FF8831']}
                 };
                 
                 var chart = new google.visualization.GeoChart(document.getElementById('regionsDiv'));

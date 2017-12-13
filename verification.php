@@ -32,11 +32,17 @@ if(isset($_POST['username']) && isset($_POST['password'])){
                 $_SESSION['Email'] = $userResult['Email'];
                 
                 if (isset($_SESSION['lastPage'])) {
-                    $url = $_SESSION['lastPage'];
-                    if ($url == $_SESSION['url']) {
-                        header('Location: ' . $_SESSION['url']);
+                    
+                    /*$url = $_SESSION['lastPage'];
+                    if(isset($_SESSION['url'])) {
+                        if ($url == $_SESSION['url']) {
+                            
+                        }
                     }
+                }*/
+                header('Location: ' . $_SESSION['lastPage']);
                 }
+            
                 else {
                     header('Location: index.php');
                 }
